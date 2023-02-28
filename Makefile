@@ -6,7 +6,7 @@
 #    By: kyoulee <kyoulee@student.42seoul.kr>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/20 10:50:03 by kyoulee           #+#    #+#              #
-#    Updated: 2023/02/28 17:58:17 by kyoulee          ###   ########.fr        #
+#    Updated: 2023/02/28 19:22:06 by kyoulee          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ DFLAGS = $(NULL) -g
 IFLAGS =								\
 	-I $(INCLUDE_DIR)					\
 	-I $(INCLUDE_CONTROL_DIR)			\
-	-I $(INCLUDE_MINILIBX_SELECT_DIR)
+	-I $(SRC_00_DIR)
 
 LDFLAGS = $(NULL)
 LDLIBS = $(NULL)
@@ -27,6 +27,7 @@ LDLIBS = $(NULL)
 #####***** DIR *****#####
 
 ROOTDIR = $(abspath $(dir $(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))))
+SRC_00_DIR = $(ROOTDIR)/src_00
 SRC_01_DIR = $(ROOTDIR)/src_01
 SRC_02_PARAM_DIR = $(ROOTDIR)/src_02_param
 SRC_03_CAMERA_DIR = $(ROOTDIR)/src_03_camera
@@ -46,6 +47,12 @@ INCLUDE_DIR = $(ROOTDIR)/include
 INCLUDE_CONTROL_DIR = $(ROOTDIR)/include/control
 #####***** SRC *****#####
 
+SRC_00 =	ft_oct_tree.c	\
+			ft_queue.c		\
+			test.c
+
+SRC_00_C = $(addprefix $(SRC_00_DIR)/, $(SRC_00))
+
 SRC_01 =	main.c
 
 SRC_01_C = $(addprefix $(SRC_01_DIR)/, $(SRC_01))
@@ -58,7 +65,8 @@ SRC_03_CAMERA =	ft_camera.c
 
 SRC_03_CAMERA_C = $(addprefix $(SRC_03_CAMERA_DIR)/, $(SRC_03_CAMERA))
 
-SRC_04_RENDER =	ft_render.c
+SRC_04_RENDER =	ft_render.c	\
+				ft_scaline.c
 
 SRC_04_RENDER_C = $(addprefix $(SRC_04_RENDER_DIR)/, $(SRC_04_RENDER))
 
@@ -69,6 +77,7 @@ SRC_05_CONTROL_C = $(addprefix $(SRC_05_CONTROL_DIR)/, $(SRC_05_CONTROL))
 
 
 SRC_TOOL =					\
+				ft_memcpy.c			\
 				ft_bzero.c			\
 				ft_error.c			\
 				ft_strlen.c			\
@@ -133,7 +142,8 @@ SRC_MLX_WIN_C = $(addprefix $(SRC_MLX_WIN_DIR)/, $(SRC_MLX_WIN))
 
 
 
-OBJS =	$(SRC_01_C:$(SRC_01_DIR)/%.c=$(OBJ_DIR)/%.o)						\
+OBJS =	$(SRC_00_C:$(SRC_00_DIR)/%.c=$(OBJ_DIR)/%.o)						\
+		$(SRC_01_C:$(SRC_01_DIR)/%.c=$(OBJ_DIR)/%.o)						\
 		$(SRC_02_PARAM_C:$(SRC_02_PARAM_DIR)/%.c=$(OBJ_DIR)/%.o)			\
 		$(SRC_03_CAMERA_C:$(SRC_03_CAMERA_DIR)/%.c=$(OBJ_DIR)/%.o)			\
 		$(SRC_04_RENDER_C:$(SRC_04_RENDER_DIR)/%.c=$(OBJ_DIR)/%.o)			\
@@ -166,6 +176,9 @@ $(OBJ_DIR) :
 
 debug : 
 	$(CC) $(CFLAGS) $(IFLAGS) $(LDFLAGS) $(DFLAGS) $(LDLIBS) $(OBJS) -o debug -g
+
+$(OBJ_DIR)/%.o : $(SRC_00_DIR)/%.c
+	$(CC) $(CXXFLAGS) $(CFLAGS) $(IFLAGS) $(DFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o : $(SRC_01_DIR)/%.c
 	$(CC) $(CXXFLAGS) $(CFLAGS) $(IFLAGS) $(DFLAGS) -c $< -o $@

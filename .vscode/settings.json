@@ -18,6 +18,10 @@
         "ft_matrix.h": "c",
         "algorithm": "cpp",
         "stdlib.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "ft_render.h": "c",
+        "math.h": "c",
+        "ft_oct_tree.h": "c",
+        "test.h": "c"
     }
 }

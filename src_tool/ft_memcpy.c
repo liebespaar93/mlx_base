@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tool.h                                          :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kyoulee <kyoulee@student.42seoul.kr>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/23 09:54:18 by kyoulee           #+#    #+#             */
-/*   Updated: 2023/02/28 19:21:45 by kyoulee          ###   ########.fr       */
+/*   Created: 2022/03/09 16:57:02 by kyoulee           #+#    #+#             */
+/*   Updated: 2023/02/28 19:21:37 by kyoulee          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_MINIRT_TOOL_H
-# define FT_MINIRT_TOOL_H
+#include <sys/_types/_size_t.h>
 
-# include <sys/_types/_size_t.h>
+void	*ft_memcpy(void *dst, const void *src, size_t n)
+{
+	unsigned char	*dptr;
+	unsigned char	*sptr;
 
-void	ft_bzero(void *s, size_t n);
-
-size_t	ft_strlen(const char *str);
-
-void	*ft_zeromalloc(void **ptr, size_t size);
-
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-
-void	ft_exit_error(int error);
-void	ft_exit_print_error(int error, char *str);
-
-#endif
+	dptr = (unsigned char *)dst;
+	sptr = (unsigned char *)src;
+	if ((dst == (void *)0) && (src == (void *)0))
+		return ((void *)0);
+	while (n-- > 0)
+		*dptr++ = *sptr++;
+	return (dst);
+}

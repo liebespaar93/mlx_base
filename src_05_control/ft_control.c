@@ -21,6 +21,8 @@ int	ft_key_update(t_keyboard *keyboard, t_camera *camera)
 			axis = ft_vec3_mult_mtx4(camera->axis , ft_mtx4_rot_y(-M_PI * 0.5));
 			camera->position = ft_vec3_add(camera->position, ft_vec3_mult(axis, keyboard->x));
 		}
+		keyboard->x = 0;
+		keyboard->y = 0;
 		return (1);
 	}
 	return (0);
@@ -34,6 +36,8 @@ int	ft_mouse_update(t_mouse *mouse, t_camera *camera)
 			camera->axis = ft_vec3_mult_mtx4(camera->axis , ft_mtx4_rot_x(mouse->x_angle * 0.01));
 		if (mouse->y_angle)
 			camera->axis = ft_vec3_mult_mtx4(camera->axis , ft_mtx4_rot_y(-mouse->y_angle * 0.01));
+		mouse->x_angle = 0;
+		mouse->y_angle = 0;
 		return (1);
 	}
 	return (0);
