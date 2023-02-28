@@ -1,0 +1,61 @@
+
+IFLAGS += -I $(INCLUDE_MLX_DIR)
+
+LDFLAGS += -L $(MINILIBX_SELECT_DIR)
+LDLIBS += -lmlx -lm -framework OpenGL -framework AppKit
+
+INCLUDE_MLX_DIR = $(INCLUDE_MINILIBX_SELECT_DIR)
+
+MINILIBX_DIR = $(ROOTDIR)/modules/minilibx
+
+ifneq ($(filter m1, $(MAKECMDGOALS)), )
+MINILIBX_SELECT = $(MINILIBX_MMS)
+MINILIBX_SELECT_DIR = $(MINILIBX_MMS_DIR)
+INCLUDE_MINILIBX_SELECT_DIR = $(INCLUDE_MINILIBX_MMS_DIR)
+MINILIBX_SELECT_CLEAN = clean_minilibx_mms
+else
+MINILIBX_SELECT = $(MINILIBX_MACOS)
+MINILIBX_SELECT_DIR = $(MINILIBX_MACOS_DIR)
+INCLUDE_MINILIBX_SELECT_DIR = $(INCLUDE_MINILIBX_MACOS_DIR)
+MINILIBX_SELECT_CLEAN = clean_minilibx_macos
+endif
+
+MINILIBX_MACOS = $(MINILIBX_MACOS_DIR)/libmlx.a
+MINILIBX_MACOS_DIR = $(MINILIBX_DIR)/minilibx_macos
+INCLUDE_MINILIBX_MACOS_DIR = $(MINILIBX_MACOS_DIR)
+
+MINILIBX_MMS = $(MINILIBX_MMS_DIR)/libmlx.dylib
+MINILIBX_MMS_DIR = $(MINILIBX_DIR)/minilibx_mms_20191025_beta
+INCLUDE_MINILIBX_MMS_DIR = $(MINILIBX_MMS_DIR)
+
+#####***** working *****#####
+
+$(TARGET) : $(MINILIBX_SELECT)
+
+$(MINILIBX_MACOS):
+	echo "$(FG_MAGENTA)module $(FG_LYELLOW)minilibx_macos$(NO_COLOR) -> $(FG_LCYAN)$(MINILIBX_MACOS)$(NO_COLOR)$(BG_MAKE1)"
+	$(MAKE) -C $(MINILIBX_MACOS_DIR)
+	@echo "$(NO_COLOR)"
+
+$(MINILIBX_MMS):
+	echo "$(FG_MAGENTA)module $(FG_LYELLOW)minilibx_mms$(NO_COLOR) -> $(FG_LCYAN)$(MINILIBX_MMS)$(NO_COLOR)$(BG_MAKE1)"
+	$(MAKE) -C $(MINILIBX_MMS_DIR)
+	cp $(MINILIBX_MMS) $(ROOTDIR)/
+	@echo "$(NO_COLOR)"
+
+#####***** clean *****#####
+
+clean_minilibx_macos :
+	@echo "clean $(FG_MAGENTA)module $(FG_LYELLOW)$(notdir $(MINILIBX_SELECT))$(NO_COLOR)$(BG_MAKE1)"
+	$(MAKE) -C $(MINILIBX_SELECT_DIR) clean 
+	@echo "$(NO_COLOR)"
+
+clean_minilibx_mms :
+	@echo "clean $(FG_MAGENTA)module $(FG_LYELLOW)$(notdir $(MINILIBX_SELECT))$(NO_COLOR)$(BG_MAKE1)"
+	rm -f $(ROOTDIR)/$(notdir $(MINILIBX_MMS))
+	$(MAKE) -C $(MINILIBX_MMS_DIR) clean 
+	@echo "$(NO_COLOR)"
+
+clean : $(MINILIBX_SELECT_CLEAN)
+
+.PHONY: clean_minilibx_macos cleanminilibx_mms m1
