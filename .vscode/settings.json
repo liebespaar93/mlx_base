@@ -1,5 +1,23 @@
 {
     "files.associations": {
-        "mlx.h": "c"
+        "mlx.h": "c",
+        "ft_param.h": "c",
+        "ft_camera.h": "c",
+        "ft_tool.h": "c",
+        "_size_t.h": "c",
+        "errno.h": "c",
+        "ft_mlx_control.h": "c",
+        "ft_mac_win.h": "c",
+        "ft_mac_mouse.h": "c",
+        "ft_mac_keyboard.h": "c",
+        "mac_keycode.h": "c",
+        "mac_mousecode.h": "c",
+        "ft_control.h": "c",
+        "ios": "c",
+        "ft_vector.h": "c",
+        "ft_matrix.h": "c",
+        "algorithm": "cpp",
+        "stdlib.h": "c",
+        "stdio.h": "c"
     }
 }
